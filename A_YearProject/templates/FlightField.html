@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Flight Fields{% endblock title %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="container" >
+            <form method="GET" action="">
+                <input type="text" name="q" placeholder="Search posts"/>
+                <input type="submit" value="Search" />
+            </form>
+            <br>
+            <table class="table tab-pane">
+                    <tr>
+                        <th>Flight Field ID</th>
+                        <th>Tarmac Type</th>
+                        <th>Area</th>
+                        <th>Terminal</th>
+                    </tr>
+                {% for field in fields %}
+                    <tr>
+                        <td>{{ field.id }}</td>
+                        <td>{{ field.tarmac_type }}</td>
+                        <td>{{ field.area }}</td>
+                        <td>{{ field.terminal }}</td>
+                        <td>
+                            <a href="/fields/{{ field.id }}"><input  type="submit" class="btn btn-dark" value="Edit" name="edit"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
+        <a href="/fields/add"><input  type="submit" class="btn btn-dark" value="Add" name="add"></a>
+        </div>
+    </div>
+{% endblock content %}

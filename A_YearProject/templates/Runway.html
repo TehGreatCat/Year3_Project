@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Runway{% endblock title %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="container" >
+            <form method="GET" action="">
+                <input type="text" name="q" placeholder="Search posts"/>
+                <input type="submit" value="Search" />
+            </form>
+            <br>
+            <table class="table tab-pane">
+                    <tr>
+                        <th>Runway ID</th>
+                        <th>Type</th>
+                        <th>Length</th>
+                        <th>Weight Allowed</th>
+                        <th>Flight Field</th>
+                    </tr>
+                {% for runway in runways %}
+                    <tr>
+                        <td>{{ runway.id }}</td>
+                        <td>{{ runway.tarmac_type }}</td>
+                        <td>{{ runway.length }}</td>
+                        <td>{{ runway.max_weight }}</td>
+                        <td>{{ runway.flight_field }}</td>
+                        <td>
+                            <a href="/runway/{{ runway.id }}"><input  type="submit" class="btn btn-dark" value="Edit" name="edit"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
+        <a href="/runway/add"><input  type="submit" class="btn btn-dark" value="Add" name="add"></a>
+        </div>
+    </div>
+{% endblock content %}

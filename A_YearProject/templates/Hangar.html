@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Hangars{% endblock title %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="container" >
+            <form method="GET" action="">
+                <input type="text" name="q" placeholder="Search posts"/>
+                <input type="submit" value="Search" />
+            </form>
+            <br>
+            <table class="table tab-pane">
+                    <tr>
+                        <th>Hangar ID</th>
+                        <th>Type</th>
+                        <th>Height</th>
+                        <th>Width</th>
+                        <th>Flight Field</th>
+                    </tr>
+                {% for hangar in hangars %}
+                    <tr>
+                        <td>{{ hangar.id }}</td>
+                        <td>{{ hangar.type }}</td>
+                        <td>{{ hangar.height }}</td>
+                        <td>{{ hangar.width }}</td>
+                        <td>{{ hangar.flight_field }}</td>
+                        <td>
+                            <a href="/hangar/{{ hangar.id }}"><input  type="submit" class="btn btn-dark" value="Edit" name="edit"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
+        <a href="/hangar/add"><input  type="submit" class="btn btn-dark" value="Add" name="add"></a>
+        </div>
+    </div>
+{% endblock content %}

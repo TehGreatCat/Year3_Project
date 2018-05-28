@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static "/css/NavMenu.css" %}"/>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+
+    {#      JQuery  #}
+    <script src="{% static 'js/jquery-3.2.1.js' %}" type="jscript"></script>
+
+    {#        Bootstrap #}
+    <link href='{% static 'css/bootstrap.min.css' %}' rel="stylesheet" type="text/css"/>
+</head>
+<body>
+{% include 'header.html' %}
+{% block content %}
+{% endblock content %}
+{% include 'footer.html' %}
+
+</body>
+</html>

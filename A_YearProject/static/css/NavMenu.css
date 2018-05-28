@@ -1,0 +1,59 @@
+        body{
+            background-image: url("https://i.img{% endblock %}ur.com/ltmWANZ.png");
+            height: 850px;
+            width: 1370px;
+        }
+
+        form {
+            color: #000000;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #7230af;
+        }
+
+        th {
+            color: #000000;
+        }
+        /*cbc9cf*/
+        td {
+            color: #000000;
+        }
+
+        thead tr td:hover{
+            background-color: #f7c3f0;
+            transition: background-color 0.3s ease-in;
+        }
+
+        nav {
+            background-color: #7230af;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #885ca9;
+            color: white;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+            .active {
+                background-color: #9205ff;
+                text-decoration: none;
+                color: white;
+            }

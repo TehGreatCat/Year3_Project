@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Flight Add{% endblock title %}
+
+{% block content %}
+        <div class="container">
+            <form action="" method="post">
+            {% csrf_token %}
+             {{ form.as_p }}
+                <input  type="submit" class="btn btn-dark" value="Save" name="save">
+                <input  type="submit" class="btn btn-dark" value="Delete" name="delete">
+            </form>
+        </div>
+
+{% endblock %}

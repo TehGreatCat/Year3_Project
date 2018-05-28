@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Cargo Storage{% endblock title %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="container" >
+            <form method="GET" action="">
+                <input type="text" name="q" placeholder="Search posts"/>
+                <input type="submit" value="Search" />
+            </form>
+            <br>
+            <table class="table tab-pane">
+                    <tr>
+                        <th>Storage ID</th>
+                        <th>Height</th>
+                        <th>Volume</th>
+                        <th>Temperature(C)</th>
+                        <th>Terminal</th>
+                    </tr>
+                {% for store in storage %}
+                    <tr>
+                        <td>{{ store.id }}</td>
+                        <td>{{ store.height }}</td>
+                        <td>{{ store.volume }}</td>
+                        <td>{{ store.temperature }}</td>
+                        <td>{{ store.terminal }}</td>
+                        <td>
+                            <a href="/storage/{{ store.id }}"><input  type="submit" class="btn btn-dark" value="Edit" name="edit"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
+        <a href="/storage/add"><input  type="submit" class="btn btn-dark" value="Add" name="add"></a>
+        </div>
+    </div>
+{% endblock content %}

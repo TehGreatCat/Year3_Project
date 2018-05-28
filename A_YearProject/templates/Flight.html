@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Flights{% endblock title %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="container" >
+            <form method="GET" action="">
+                <input type="text" name="q" placeholder="Search posts"/>
+                <input type="submit" value="Search" />
+            </form>
+            <br>
+            <table class="table tab-pane">
+                    <tr>
+                        <th>Flight ID</th>
+                        <th>Airline</th>
+                        <th>Time of Departure</th>
+                        <th>Time of Arrival</th>
+                        <th>Plane</th>
+                        <th>Gates</th>
+                        <th>Runway</th>
+                        <th>Passengers</th>
+                    </tr>
+                {% for flight in flights %}
+                    <tr>
+                        <td>{{ flight.id }}</td>
+                        <td>{{ flight.airline }}</td>
+                        <td>{{ flight.time_of_departure }}</td>
+                        <td>{{ flight.time_of_arrival }}</td>
+                        <td>{{ flight.plane }}</td>
+                        <td>{{ flight.gates }}</td>
+                        <td>{{ flight.runway }}</td>
+                        <td><a href="/flight/passengers/{{ flight.id }}">List of Passengers</a></td>
+                        <td>
+                            <a href="/flight/{{ flight.id }}"><input  type="submit" class="btn btn-dark" value="Edit" name="edit"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
+        <a href="/flight/add"><input  type="submit" class="btn btn-dark" value="Add" name="add"></a>
+        </div>
+    </div>
+{% endblock content %}
