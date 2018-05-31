@@ -4,14 +4,37 @@ from django.db.models import Q
 from django.shortcuts import render
 from .forms import *
 from .models import *
+from django.contrib.auth import authenticate
 # Create your views here.
+
+un = '1'
+pw = '2'
 
 
 def index(request):
-    return render(request, "index.html")
+    user = authenticate(username=un, password=pw)
+    if user is not None:
+        return render(request, "index.html")
+    else:
+        return redirect('/auth')
+
+
+def auth(request):
+    if request.method == 'POST':
+        global un
+        global pw
+        un = request.POST['username']
+        pw = request.POST['pass']
+        user = authenticate(username=un, password=pw)
+        if user is not None:
+            return redirect('/')
+        else:
+            return redirect('/auth')
+    return render(request, 'auth.html', locals())
 
 
 def terminal_show(request):
+    # user = authenticate(request, username, password)
     terminals = Terminal.objects.all()
     query = request.GET.get('q')
     if query:
@@ -27,38 +50,51 @@ def terminal_show(request):
                 Q(id=query)
             ).distinct()
     ctx = {'terminals': terminals}
-    return render(request, 'Terminal.html', ctx)
+    print(terminals.query)
+    user = authenticate(username=un, password=pw)
+    if user is not None:
+        return render(request, "Terminal.html", ctx)
+    else:
+        return redirect('/auth')
 
 
 def terminal_add(request):
-    if 'delete' in request.POST.keys() and request.POST['delete']:
-        return redirect("/terminal")
-    form = TerminalzForm(request.POST or None)
-    if form.is_valid():
-        instance = form.save()
-        instance.save()
-        return HttpResponseRedirect('/terminal')
-    return render(request, 'Terminal_add.html', {'form': form})
+    user = authenticate(username=un, password=pw)
+    if user is not None:
+        if 'delete' in request.POST.keys() and request.POST['delete']:
+            return redirect("/terminal")
+        form = TerminalzForm(request.POST or None)
+        if form.is_valid():
+            instance = form.save()
+            instance.save()
+            return HttpResponseRedirect('/terminal')
+        return render(request, 'Terminal_add.html', {'form': form})
+    else:
+        return redirect('/auth')
 
 
 def terminal_update(request, id):
-    instance = get_object_or_404(Terminal, pk=id)
-    terminal = Terminal.objects.get(pk=id)
-    form = TerminalzForm(instance=instance)
-    if request.method == "POST":
-        form = TerminalzForm(request.POST, instance=instance)
-        if 'delete' in request.POST.keys() and request.POST['delete']:
-            terminal.delete()
-            return redirect("/terminal/")
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/terminal')
-    context = {
-        "form": form,
-        "title": "Terminal",
-        "instance": instance,
-    }
-    return render(request, 'Terminal_add.html', context)
+    user = authenticate(username=un, password=pw)
+    if user is not None:
+        instance = get_object_or_404(Terminal, pk=id)
+        terminal = Terminal.objects.get(pk=id)
+        form = TerminalzForm(instance=instance)
+        if request.method == "POST":
+            form = TerminalzForm(request.POST, instance=instance)
+            if 'delete' in request.POST.keys() and request.POST['delete']:
+                terminal.delete()
+                return redirect("/terminal/")
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/terminal')
+        context = {
+            "form": form,
+            "title": "Terminal",
+            "instance": instance,
+        }
+        return render(request, 'Terminal_add.html', context)
+    else:
+        return redirect('/auth')
 
 
 def runway_show(request):
@@ -461,6 +497,7 @@ def hangar_update(request, id):
 
 def list_of_passengers(request, id):
     passengers = Passenger.objects.all().filter(Q(flight__id=id))
+    print(passengers.query)
     ctx = {'passengers': passengers}
     return render(request, 'Passengers.html', ctx)
 

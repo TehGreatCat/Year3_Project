@@ -67,3 +67,10 @@ class ControlTowerForm(ModelForm):
     class Meta:
         model = ControlTower
         fields = ['id', 'radius', 'shortname', 'flight_field']
+
+
+class AuthUserForm(ModelForm):
+    class Meta:
+        model = AuthUser
+        fields = ['password', 'is_superuser', 'username',
+                  'first_name', 'last_name', 'email']

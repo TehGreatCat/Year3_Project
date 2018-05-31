@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('', index, name='index'),
+    path('auth', auth, name='Auth kek'),
     path('terminal', terminal_show, name='Terminal Info'),
     path('terminal/add', terminal_add, name='Add Terminal'),
     path('terminal/<id>', terminal_update, name='Update Terminal'),
